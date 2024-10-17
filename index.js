@@ -14,6 +14,8 @@ async function run() {
     await client.connect();
     const db = client.db("rehandb");
     const newUserCollection = db.collection("userLists");
+    const categoryCollection = db.collection("category");
+    const productsCollection = db.collection("products");
 
     //new user api start here 
     app.post("/user", async (req, res) => {
@@ -38,7 +40,7 @@ async function run() {
 
     app.delete("/user/:id", async (req, res) => {
       const id = req.params.id;
-      console.log(id, "reud");
+      //console.log(id, "reud");
       const query = { _id: new ObjectId(id) };
       const result = await course_collection.deleteOne(query);
       res.send(result);
@@ -47,22 +49,22 @@ async function run() {
     app.put("/user/:id", async (req, res) => {
       const id = req.params.id;
       console.log(id);
-      const course = req.body;
+      const user = req.body;
       const filter = { _id: new ObjectId(id) };
       const option = { upsert: true };
-      const updatedCourse = {
+      const updateduser = {
         $set: {
-          course_title: course.course_title,
-          course_description: course.course_description,
-          course_price: course.course_price,
-          course_duration: course.course_duration,
+          user_title: user.user_title,
+          user_description: user.user_description,
+          user_price: user.user_price,
+          user_duration: user.user_duration,
 
         },
       };
 
-      const result = await course_collection.updateOne(
+      const result = await user_collection.updateOne(
         filter,
-        updatedCourse,
+        updateduser,
         option
       );
       res.send(result);
@@ -72,6 +74,131 @@ async function run() {
 
 
     //new user api end
+
+
+
+    //new user api start here 
+    app.post("/category", async (req, res) => {
+      const category = req.body;
+      const result = await categoryCollection.insertOne(category);
+      res.send(result);
+    });
+
+    app.get("/category", async (req, res) => {
+      const result = await categoryCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/category/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: id };
+      const result = await categoryCollection.findOne(filter);
+
+      res.send(result);
+    });
+
+
+    app.delete("/category/:id", async (req, res) => {
+      const id = req.params.id;
+      //console.log(id, "reud");
+      const query = { _id: new ObjectId(id) };
+      const result = await categoryCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    app.put("/category/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const category = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const option = { upsert: true };
+      const updatedcategory = {
+        $set: {
+          category_title: category.category_title,
+          category_description: category.category_description,
+          category_price: category.category_price,
+          category_duration: category.category_duration,
+
+        },
+      };
+
+      const result = await category_collection.updateOne(
+        filter,
+        updatedcategory,
+        option
+      );
+      res.send(result);
+
+
+    })
+
+
+    //new user api end
+
+
+
+
+
+    //new user api start here 
+    app.post("/product", async (req, res) => {
+      const products = req.body;
+      const result = await productsCollection.insertOne(products);
+      res.send(result);
+    });
+
+    app.get("/product", async (req, res) => {
+      const result = await productsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: id };
+      const result = await productsCollection.findOne(filter);
+
+      res.send(result);
+    });
+
+
+    app.delete("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      //console.log(id, "reud");
+      const query = { _id: new ObjectId(id) };
+      const result = await productsCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    app.put("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const product = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const option = { upsert: true };
+      const updatedproduct = {
+        $set: {
+          product_title: product.product_title,
+          product_description: product.product_description,
+          product_price: product.product_price,
+          product_duration: product.product_duration,
+
+        },
+      };
+
+      const result = await productsCollection.updateOne(
+        filter,
+        updatedproduct,
+        option
+      );
+      res.send(result);
+
+
+    })
+
+
+    //new user api end
+
+
+
 
 
 
