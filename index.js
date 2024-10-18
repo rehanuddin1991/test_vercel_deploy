@@ -31,7 +31,7 @@ async function run() {
 
     app.get("/user/:id", async (req, res) => {
       const id = req.params.id;
-      const filter = { userId: id };
+      const filter = { uid: id };
       const result = await newUserCollection.findOne(filter);
 
       res.send(result);
@@ -54,15 +54,16 @@ async function run() {
       const option = { upsert: true };
       const updateduser = {
         $set: {
-          user_title: user.user_title,
-          user_description: user.user_description,
-          user_price: user.user_price,
-          user_duration: user.user_duration,
+          displayName: user.displayName,
+          phone: user.phone,
+          address: user.address,
+          phoroURL: user.phoroURL,
+         
 
         },
       };
 
-      const result = await user_collection.updateOne(
+      const result = await newUserCollection.updateOne(
         filter,
         updateduser,
         option
@@ -91,7 +92,9 @@ async function run() {
 
     app.get("/category/:id", async (req, res) => {
       const id = req.params.id;
-      const filter = { _id: id };
+      console.log(399,id)
+      //const filter = { _id: id };
+      const filter={ _id: new ObjectId(id) };
       const result = await categoryCollection.findOne(filter);
 
       res.send(result);
@@ -114,15 +117,14 @@ async function run() {
       const option = { upsert: true };
       const updatedcategory = {
         $set: {
-          category_title: category.category_title,
-          category_description: category.category_description,
-          category_price: category.category_price,
-          category_duration: category.category_duration,
+          categoryName: category.categoryName,
+          imageURL: category.imageURL,
+           
 
         },
       };
 
-      const result = await category_collection.updateOne(
+      const result = await categoryCollection.updateOne(
         filter,
         updatedcategory,
         option
