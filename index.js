@@ -16,6 +16,7 @@ async function run() {
     const newUserCollection = db.collection("userLists");
     const categoryCollection = db.collection("category");
     const productsCollection = db.collection("products");
+    const buyProductCollection = db.collection("buyProduct");
 
     //new user api start here 
     app.post("/user", async (req, res) => {
@@ -148,8 +149,23 @@ async function run() {
       res.send(result);
     });
 
+    //purchase info
+    app.post("/buy_product", async (req, res) => {
+      const products = req.body;
+      const result = await buyProductCollection.insertOne(products);
+      res.send(result);
+    });
+
+    
+
     app.get("/product", async (req, res) => {
       const result = await productsCollection.find().toArray();
+      res.send(result);
+    });
+
+    //purchase info get
+    app.get("/buy_product", async (req, res) => {
+      const result = await buyProductCollection.find().toArray();
       res.send(result);
     });
 
@@ -161,6 +177,20 @@ async function run() {
 
       res.send(result);
     });
+
+    //category wise product
+    app.get("/categorywiseproduct/:id", async (req, res) => {
+      const id = req.params.id;
+      //console.log(id," eeeeshhh")
+      //const filter = { _id: id };
+      const filter={ productCategory: id };
+      const result = await productsCollection.find(filter).toArray();
+
+      res.send(result);
+    });
+
+
+    
 
 
     app.delete("/product/:id", async (req, res) => {
