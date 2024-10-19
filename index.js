@@ -155,7 +155,8 @@ async function run() {
 
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
-      const filter = { _id: id };
+      //const filter = { _id: id };
+      const filter={ _id: new ObjectId(id) };
       const result = await productsCollection.findOne(filter);
 
       res.send(result);
@@ -177,11 +178,11 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       const option = { upsert: true };
       const updatedproduct = {
+        
         $set: {
-          product_title: product.product_title,
-          product_description: product.product_description,
-          product_price: product.product_price,
-          product_duration: product.product_duration,
+          productName: product.productName,
+          imageURL: product.imageURL,
+          
 
         },
       };
