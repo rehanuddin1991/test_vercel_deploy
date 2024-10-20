@@ -42,8 +42,8 @@ async function run() {
     app.delete("/user/:id", async (req, res) => {
       const id = req.params.id;
       //console.log(id, "reud");
-      const query = { _id: new ObjectId(id) };
-      const result = await course_collection.deleteOne(query);
+      const query = { uid: id };
+      const result = await newUserCollection.deleteOne(query);
       res.send(result);
     });
 
@@ -51,14 +51,14 @@ async function run() {
       const id = req.params.id;
       console.log(id);
       const user = req.body;
-      const filter = { _id: new ObjectId(id) };
-      const option = { upsert: true };
+      const filter = { uid:   id };
+      const option = { upsert: false };
       const updateduser = {
         $set: {
           displayName: user.displayName,
           phone: user.phone,
           address: user.address,
-          phoroURL: user.phoroURL,
+          photoURL: user.photoURL,
          
 
         },
@@ -115,7 +115,7 @@ async function run() {
       console.log(id);
       const category = req.body;
       const filter = { _id: new ObjectId(id) };
-      const option = { upsert: true };
+      const option = { upsert: false };
       const updatedcategory = {
         $set: {
           categoryName: category.categoryName,
@@ -206,7 +206,7 @@ async function run() {
       console.log(id);
       const product = req.body;
       const filter = { _id: new ObjectId(id) };
-      const option = { upsert: true };
+      const option = { upsert: false };
       const updatedproduct = {
         
         $set: {
