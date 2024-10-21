@@ -211,6 +211,10 @@ async function run() {
         
         $set: {
           productName: product.productName,
+          productPrice: product.productPrice,
+          productQuantity: product.productQuantity,
+          productRating: product.productRating,
+          productDescription: product.productDescription,
           imageURL: product.imageURL,
           
 
