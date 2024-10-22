@@ -119,6 +119,7 @@ async function run() {
       const updatedcategory = {
         $set: {
           categoryName: category.categoryName,
+          categoryDescription: category.categoryDescription,
           imageURL: category.imageURL,
            
 
