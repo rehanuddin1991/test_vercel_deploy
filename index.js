@@ -161,6 +161,24 @@ async function run() {
       res.send(result);
     });
 
+
+    app.get("/buy_product", async (req, res) => {
+      const result = await buyProductCollection.find().toArray();
+      res.send(result);
+    });
+
+
+    app.get("/buy_product/:uid", async (req, res) => {
+      const id = req.params.uid;
+      console.log(11,id)
+      //const filter = { _id: id };
+      const filter={ uid: id };
+      const result = await buyProductCollection.findOne(filter);
+
+      res.send(result);
+    });
+
+
     
 
     app.get("/product", async (req, res) => {
