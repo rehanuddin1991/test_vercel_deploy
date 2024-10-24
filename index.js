@@ -59,6 +59,8 @@ async function run() {
           phone: user.phone,
           address: user.address,
           photoURL: user.photoURL,
+          isAdmin: user.isAdmin,
+          isBlocked: user.isBlocked,
          
 
         },
@@ -112,14 +114,15 @@ async function run() {
 
     app.put("/category/:id", async (req, res) => {
       const id = req.params.id;
-      console.log(id);
+      
       const category = req.body;
+      //console.log(category, 333333333);
       const filter = { _id: new ObjectId(id) };
       const option = { upsert: false };
       const updatedcategory = {
         $set: {
           categoryName: category.categoryName,
-          categoryDescription: category.categoryDescription,
+          categoryDescription: category.categoryDescription,  
           imageURL: category.imageURL,
            
 
