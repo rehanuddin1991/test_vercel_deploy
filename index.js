@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
-app.use('/route');
+//app.use('/route');
 const { MongoClient, ObjectId } = require('mongodb');
 //const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_SECRET}@cluster0.grsue.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const uri=process.env.MONGODB_URI;
