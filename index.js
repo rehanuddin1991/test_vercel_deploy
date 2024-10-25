@@ -18,6 +18,21 @@ async function run() {
     const categoryCollection = db.collection("category");
     const productsCollection = db.collection("products");
     const buyProductCollection = db.collection("buyProduct");
+    const messageCollection = db.collection("message");
+
+
+    //message api here
+    //new user api start here 
+    app.post("/message", async (req, res) => {
+      const message = req.body;
+      const result = await messageCollection.insertOne(message);
+      res.send(result);
+    });
+
+    app.get("/message", async (req, res) => {
+      const result = await messageCollection.find().toArray();
+      res.send(result);
+    });
 
     //new user api start here 
     app.post("/user", async (req, res) => {
@@ -162,10 +177,7 @@ async function run() {
     });
 
 
-    app.get("/buy_product", async (req, res) => {
-      const result = await buyProductCollection.find().toArray();
-      res.send(result);
-    });
+    
 
 
     app.get("/buy_product/:uid", async (req, res) => {
@@ -191,6 +203,7 @@ async function run() {
       const result = await buyProductCollection.find().toArray();
       res.send(result);
     });
+    
 
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
@@ -228,6 +241,7 @@ async function run() {
       const id = req.params.id;
       console.log(id);
       const product = req.body;
+      //console.log('backend obj',product)
       const filter = { _id: new ObjectId(id) };
       const option = { upsert: false };
       const updatedproduct = {
@@ -238,6 +252,7 @@ async function run() {
           productQuantity: product.productQuantity,
           productRating: product.productRating,
           productDescription: product.productDescription,
+          productCategory: product.productCategory,
           imageURL: product.imageURL,
           
 
